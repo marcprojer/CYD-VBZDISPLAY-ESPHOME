@@ -12,6 +12,8 @@ esp32:
     type: esp-idf
 
 logger:
+  logs:
+    text_sensor: WARN
 
 api:
   encryption:
@@ -89,26 +91,6 @@ light:
     id: backlight
     restore_mode: ALWAYS_ON
 
-binary_sensor:
-  - platform: template
-    name: "Button 1"
-    id: button_1_pressed
-  - platform: template
-    name: "Button 3"
-    id: button_3_pressed
-  - platform: template
-    name: "Button 4"
-    id: button_4_pressed
-  - platform: template
-    name: "Button 5"
-    id: button_5_pressed
-  - platform: template
-    name: "Button 6"
-    id: button_6_pressed
-  - platform: template
-    name: "Button 7"
-    id: button_7_pressed
-
 switch:
   - platform: template
     name: "Anti-burn Pixel Training"
@@ -137,6 +119,7 @@ text_sensor:
   - platform: template
     name: "Current Time"
     id: current_time_display
+    internal: true
     update_interval: 1s
     lambda: |-
       auto time = id(sntp_time).now();
@@ -323,14 +306,6 @@ lvgl:
                           else:
                             - homeassistant.service:
                                 service: script.vbz_display_on
-                      - binary_sensor.template.publish:
-                          id: button_1_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_1_pressed
-                          state: OFF
-                      - delay: 300ms
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
@@ -370,13 +345,6 @@ lvgl:
                     then:
                       - homeassistant.service:
                           service: script.vbz_display_all
-                      - binary_sensor.template.publish:
-                          id: button_3_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_3_pressed
-                          state: OFF
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
@@ -400,13 +368,6 @@ lvgl:
                     then:
                       - homeassistant.service:
                           service: script.vbz_display_tram
-                      - binary_sensor.template.publish:
-                          id: button_4_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_4_pressed
-                          state: OFF
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
@@ -430,13 +391,6 @@ lvgl:
                     then:
                       - homeassistant.service:
                           service: script.vbz_display_bus
-                      - binary_sensor.template.publish:
-                          id: button_5_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_5_pressed
-                          state: OFF
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
@@ -460,13 +414,6 @@ lvgl:
                     then:
                       - homeassistant.service:
                           service: script.vbz_display_scroll_down
-                      - binary_sensor.template.publish:
-                          id: button_6_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_6_pressed
-                          state: OFF
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
@@ -490,13 +437,6 @@ lvgl:
                     then:
                       - homeassistant.service:
                           service: script.vbz_display_scroll_up
-                      - binary_sensor.template.publish:
-                          id: button_7_pressed
-                          state: ON
-                      - delay: 200ms
-                      - binary_sensor.template.publish:
-                          id: button_7_pressed
-                          state: OFF
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
