@@ -213,6 +213,7 @@ touchscreen:
   id: my_touch
   on_release:
     then:
+      - light.turn_on: backlight
       - if:
           condition: lvgl.is_paused
           then:
