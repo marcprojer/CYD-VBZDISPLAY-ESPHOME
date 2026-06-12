@@ -147,6 +147,9 @@ text_sensor:
               if (x.empty()) {
                 return std::string{"-"};
               }
+              if (x.rfind("platform_", 0) == 0 && x.size() > 9) {
+                return x.substr(9);
+              }
               return x;
         - lvgl.widget.update:
             id: btn_all
@@ -163,6 +166,36 @@ text_sensor:
             state:
               checked: !lambda |-
                 return (x == "bus" || x == "BUS" || x == "Bus");
+        - lvgl.widget.update:
+            id: btn_platform_a
+            state:
+              checked: !lambda |-
+                return (x == "platform_A" || x == "platform_a");
+        - lvgl.widget.update:
+            id: btn_platform_b
+            state:
+              checked: !lambda |-
+                return (x == "platform_B" || x == "platform_b");
+        - lvgl.widget.update:
+            id: btn_platform_c
+            state:
+              checked: !lambda |-
+                return (x == "platform_C" || x == "platform_c");
+        - lvgl.widget.update:
+            id: btn_platform_d
+            state:
+              checked: !lambda |-
+                return (x == "platform_D" || x == "platform_d");
+        - lvgl.widget.update:
+            id: btn_platform_e
+            state:
+              checked: !lambda |-
+                return (x == "platform_E" || x == "platform_e");
+        - lvgl.widget.update:
+            id: btn_platform_f
+            state:
+              checked: !lambda |-
+                return (x == "platform_F" || x == "platform_f");
 
   - platform: homeassistant
     id: vbz_display_awake_text
@@ -460,7 +493,7 @@ lvgl:
                         align: center
 
               - button:
-                  id: btn_top
+                  id: btn_platforms
                   grid_cell_column_pos: 2
                   grid_cell_row_pos: 2
                   grid_cell_x_align: STRETCH
@@ -470,14 +503,192 @@ lvgl:
                     bg_color: default_button_pressed_bg_color
                   widgets:
                     - label:
-                        text: "󰞕"
-                        text_font: font_mdi
+                        text: "A-F"
+                        text_font: arimo22
+                        align: center
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: sub_page
+                          animation: MOVE_LEFT
+                          time: 250ms
+
+
+    - id: sub_page
+      pad_all: 0
+      widgets:
+        - obj:
+            width: 320
+            height: 240
+            bg_color: room_bg_color
+            layout:
+              type: grid
+              grid_columns: [fr(1), fr(1), fr(1)]
+              grid_rows: [fr(1), fr(1), fr(1)]
+            pad_all: 5px
+            outline_pad: 5px
+            widgets:
+              - button:
+                  id: btn_platform_a
+                  grid_cell_column_pos: 0
+                  grid_cell_row_pos: 0
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "A"
+                        text_font: arimo30
                         align: center
                   on_click:
                     then:
                       - homeassistant.service:
-                          service: script.vbz_display_scroll_top #implement function on ESP32
+                          service: script.vbz_display_platform_a
                       - homeassistant.service:
                           service: homeassistant.update_entity
                           data:
                             entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_platform_b
+                  grid_cell_column_pos: 1
+                  grid_cell_row_pos: 0
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "B"
+                        text_font: arimo30
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_platform_b
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_platform_c
+                  grid_cell_column_pos: 2
+                  grid_cell_row_pos: 0
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "C"
+                        text_font: arimo30
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_platform_c
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_platform_d
+                  grid_cell_column_pos: 0
+                  grid_cell_row_pos: 1
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "D"
+                        text_font: arimo30
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_platform_d
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_platform_e
+                  grid_cell_column_pos: 1
+                  grid_cell_row_pos: 1
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "E"
+                        text_font: arimo30
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_platform_e
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_platform_f
+                  grid_cell_column_pos: 2
+                  grid_cell_row_pos: 1
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "F"
+                        text_font: arimo30
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_platform_f
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+
+              - button:
+                  id: btn_back_main
+                  grid_cell_column_pos: 1
+                  grid_cell_row_pos: 2
+                  grid_cell_x_align: STRETCH
+                  grid_cell_y_align: STRETCH
+                  bg_color: default_button_bg_color
+                  pressed:
+                    bg_color: default_button_pressed_bg_color
+                  widgets:
+                    - label:
+                        text: "ALL"
+                        text_font: arimo22
+                        align: center
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: script.vbz_display_all
+                      - homeassistant.service:
+                          service: homeassistant.update_entity
+                          data:
+                            entity_id: sensor.vbz_display_mode
+                      - lvgl.page.show:
+                          id: main_page
+                          animation: MOVE_RIGHT
+                          time: 250ms
